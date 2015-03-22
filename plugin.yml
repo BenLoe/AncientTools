@@ -1,0 +1,14 @@
+name: AncientTools
+main: org.Prison.Tools.Main
+version: 1.0
+description: >
+             Ancient Tools Plugin
+commands:                      
+  SkipCooldown:
+    description: Staff Command.
+  YesBribe:
+    description: Staff Command.
+  NoBribe:
+    description: Staff Command.
+  enchantlvl:
+    description: Staff Command.
