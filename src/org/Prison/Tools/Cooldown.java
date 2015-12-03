@@ -7,28 +7,31 @@ import org.bukkit.entity.Player;
 
 public class Cooldown {
 
-		public static boolean hasCooldown(Player p, String type){
-			if(Files.config().contains("Players." + p.getName() + ".Cooldowns." + type)){
+		public static boolean hasCooldown(String p, String type){
+			if(Files.getDataFile().contains("Players." + p + ".Cooldowns." + type)){
 				return true;
 			}else{
 				return false;
 			}
 		}
 		
-		public static void setCooldown(Player p, String type){
+		public static void setCooldown(String p, int seconds, String type){
 			Calendar c = Calendar.getInstance();
-			int days = Files.config().getInt("Cooldown." + type + ".Day");
-			int hours = Files.config().getInt("Cooldown." + type + ".Hour");
-			int minutes = Files.config().getInt("Cooldown." + type + ".Minute");
-
 			int currentday = c.get(Calendar.DAY_OF_YEAR);
 			int currenthours = c.get(Calendar.HOUR_OF_DAY);
 			int currentminutes = c.get(Calendar.MINUTE);
+			int currentseconds = c.get(Calendar.SECOND);
 			
-			int newday = days + currentday;
-			int newhours = hours + currenthours;
-			int newminutes = minutes + currentminutes;
+			int newday = 0 + currentday;
+			int newhours = 0 + currenthours;
+			int newminutes = 0 + currentminutes;
+			int newseconds = seconds + currentseconds;
 			
+			
+			if (newseconds >= 60){
+				newseconds = newseconds - 60;
+				newminutes = newminutes + 1;
+			}
 			if (newminutes >= 60){
 				newminutes = newminutes - 60;
 				newhours = newhours + 1;
@@ -37,19 +40,19 @@ public class Cooldown {
 				newhours = newhours - 24;
 				newday = newday + 1;
 			}
-			Files.config().set("Players." + p.getName() + ".Cooldowns." + type + ".Day", newday);
-			Files.config().set("Players." + p.getName() + ".Cooldowns." + type + ".Hour", newhours);
-			Files.config().set("Players." + p.getName() + ".Cooldowns." + type + ".Minute", newminutes);
-			Files.config().set("Players." + p.getName() + ".Cooldowns." + type + ".Second", c.get(Calendar.SECOND));
-			Files.saveConfig();
+			Files.getDataFile().set("Players." + p + ".Cooldowns." + type + ".Day", newday);
+			Files.getDataFile().set("Players." + p + ".Cooldowns." + type + ".Hour", newhours);
+			Files.getDataFile().set("Players." + p + ".Cooldowns." + type + ".Minute", newminutes);
+			Files.getDataFile().set("Players." + p + ".Cooldowns." + type + ".Second", newseconds);
+			Files.saveDataFile();
 		}
 		
-		public static String getTimeLeft(Player p, String type){
+		public static String getTimeLeft(String p, String type){
 			Calendar c = Calendar.getInstance();
-			int day = Files.config().getInt("Players." + p.getName() + ".Cooldowns." + type + ".Day");
-			int hours = Files.config().getInt("Players." + p.getName() + ".Cooldowns." + type + ".Hour");
-			int minutes = Files.config().getInt("Players." + p.getName() + ".Cooldowns." + type + ".Minute");
-			int seconds = Files.config().getInt("Players." + p.getName() + ".Cooldowns." + type + ".Second");
+			int day = Files.getDataFile().getInt("Players." + p + ".Cooldowns." + type + ".Day");
+			int hours = Files.getDataFile().getInt("Players." + p + ".Cooldowns." + type + ".Hour");
+			int minutes = Files.getDataFile().getInt("Players." + p + ".Cooldowns." + type + ".Minute");
+			int seconds = Files.getDataFile().getInt("Players." + p + ".Cooldowns." + type + ".Second");
 			String dateStart = c.get(Calendar.DAY_OF_YEAR) + "/" + c.get(Calendar.YEAR) + " " + c.get(Calendar.HOUR_OF_DAY) + ":" + c.get(Calendar.MINUTE) + ":" + c.get(Calendar.SECOND);
 			String dateStop = day + "/" + c.get(Calendar.YEAR) + " " + hours + ":" + minutes + ":" + seconds;
 	 
@@ -72,7 +75,7 @@ public class Cooldown {
 				long diffHours = diff / (60 * 60 * 1000) % 24;
 				long diffDays = diff / (24 * 60 * 60 * 1000);
 				
-				return "§9 " + diffMinutes + " §9§lMins§9 " + diffSeconds + " §9§lSecs";
+				return "§9" + diffMinutes + "§9§l Mins " + "§9 " + diffSeconds + "§9§l Secs";
 	 
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -80,12 +83,12 @@ public class Cooldown {
 			}
 		}
 		
-		public static boolean checkCooldown(Player p, String type){
+		public static boolean checkCooldown(String p, String type){
 			Calendar c = Calendar.getInstance();
-			int day = Files.config().getInt("Players." + p.getName() + ".Cooldowns." + type + ".Day");
-			int hours = Files.config().getInt("Players." + p.getName() + ".Cooldowns." + type + ".Hour");
-			int minutes = Files.config().getInt("Players." + p.getName() + ".Cooldowns." + type + ".Minute");
-			int seconds = Files.config().getInt("Players." + p.getName() + ".Cooldowns." + type + ".Second");
+			int day = Files.getDataFile().getInt("Players." + p + ".Cooldowns." + type + ".Day");
+			int hours = Files.getDataFile().getInt("Players." + p + ".Cooldowns." + type + ".Hour");
+			int minutes = Files.getDataFile().getInt("Players." + p + ".Cooldowns." + type + ".Minute");
+			int seconds = Files.getDataFile().getInt("Players." + p + ".Cooldowns." + type + ".Second");
 			String dateStart = c.get(Calendar.DAY_OF_YEAR) + "/" + c.get(Calendar.YEAR) + " " + c.get(Calendar.HOUR_OF_DAY) + ":" + c.get(Calendar.MINUTE) + ":" + c.get(Calendar.SECOND);
 			String dateStop = day + "/" + c.get(Calendar.YEAR) + " " + hours + ":" + minutes + ":" + seconds;
 	 
@@ -102,8 +105,8 @@ public class Cooldown {
 				//in milliseconds
 				long diff = d2.getTime() - d1.getTime();
 				if (diff <= 0){
-					Files.config().set("Players." + p.getName() + ".Cooldowns." + type, null);
-					Files.saveConfig();
+					Files.getDataFile().set("Players." + p + ".Cooldowns." + type, null);
+					Files.saveDataFile();
 					return true;
 				}else{
 					return false;
@@ -114,41 +117,13 @@ public class Cooldown {
 			}
 		}
 		
-		public static String getCooldown(String type){
-			int days = Files.config().getInt("Cooldown." + type + ".Day");
-			int hours = Files.config().getInt("Cooldown." + type + ".Hour");
-			int minutes = Files.config().getInt("Cooldown." + type + ".Minute");
-			
-			if (days > 0 && hours > 0 && minutes > 0){
-				return " §e§l" + days + "D " + hours + "H " + minutes + "M"; 
-			}
-			if (days > 0 && hours > 0 && minutes == 0){
-				return " §e§l" + days + "D " + hours + "H";
-			}
-			if (hours > 0 && minutes > 0 && days == 0){
-				return " §e§l" + hours + "H " + minutes + "M";
-			}
-			if (days > 0 && minutes > 0 && hours == 0){
-				return " §e§l" + days + "D " + minutes + "M";
-			}
-			if (days > 0 && hours == 0 && minutes == 0){
-				return " §e§l" + days + " Days"; 
-			}
-			if (hours > 0 && days == 0 && minutes == 0){
-				return " §e§l" + days + " Hours"; 
-			}
-			if (minutes > 0 && days == 0 && hours == 0){
-				return " §e§l" + minutes + " Minutes"; 
-			}
-			return "BROKEN";
-		}
-		public static int getMinutes(String type, Player p){
+		public static int getMinutes(String type, String p){
 			if (hasCooldown(p, type)){
 				Calendar c = Calendar.getInstance();
-				int day = Files.config().getInt("Players." + p.getName() + ".Cooldowns." + type + ".Day");
-				int hours = Files.config().getInt("Players." + p.getName() + ".Cooldowns." + type + ".Hour");
-				int minutes = Files.config().getInt("Players." + p.getName() + ".Cooldowns." + type + ".Minute");
-				int seconds = Files.config().getInt("Players." + p.getName() + ".Cooldowns." + type + ".Second");
+				int day = Files.getDataFile().getInt("Players." + p + ".Cooldowns." + type + ".Day");
+				int hours = Files.getDataFile().getInt("Players." + p+ ".Cooldowns." + type + ".Hour");
+				int minutes = Files.getDataFile().getInt("Players." + p + ".Cooldowns." + type + ".Minute");
+				int seconds = Files.getDataFile().getInt("Players." + p + ".Cooldowns." + type + ".Second");
 				String dateStart = c.get(Calendar.DAY_OF_YEAR) + "/" + c.get(Calendar.YEAR) + " " + c.get(Calendar.HOUR_OF_DAY) + ":" + c.get(Calendar.MINUTE) + ":" + c.get(Calendar.SECOND);
 				String dateStop = day + "/" + c.get(Calendar.YEAR) + " " + hours + ":" + minutes + ":" + seconds;
 		 
@@ -174,8 +149,8 @@ public class Cooldown {
 			return 0;
 		}
 		
-		public static void resetCooldown(String type, Player p){
-			Files.config().set("Players." + p.getName() + ".Cooldowns." + type, null);
-			Files.saveConfig();
+		public static void resetCooldown(String type, String p){
+			Files.getDataFile().set("Players." + p + ".Cooldowns." + type, null);
+			Files.saveDataFile();
 		}
 }

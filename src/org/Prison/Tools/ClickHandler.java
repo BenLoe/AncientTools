@@ -14,10 +14,21 @@ public class ClickHandler {
 			if (p.getInventory().getItemInHand() != null){
 				if (p.getInventory().getItemInHand().hasItemMeta()){
 					if (p.getItemInHand().getItemMeta().getDisplayName().contains("Ancient Pickaxe")){
-						ToolAPI.giveTools(p);
+						ToolAPI.givePickaxe(p);
+						return;
+					}
+					if (p.getItemInHand().getItemMeta().getDisplayName().contains("Ancient Sword")){
+						ToolAPI.giveSword(p);
+						return;
+					}
+					String name = p.getItemInHand().getItemMeta().getDisplayName();
+					if (name.contains("Ancient Boots") || name.contains("Ancient Chestplate") || name.contains("Ancient Leggings") || name.contains("Ancient Helmet")){
+						ToolAPI.giveArmor(p);
+						return;
 					}
 				}
 			}
+			p.sendMessage(ToolAPI.tag + "§cI can't identify that, give me an ancient tool.");
 		}
 		if (Files.config().getInt("EnchantID") == id){
 			if (event.getClicker().getItemInHand() != null){
@@ -27,10 +38,12 @@ public class ClickHandler {
 					if (itemm.getLore().size() > 1){
 					if (itemm.getLore().get(1).contains("Efficiency")){
 						Enchanter.attempt(p);
+						return;
 					}
 					}
 				}
 			}
+			p.sendMessage(Enchanter.tag + "§cSorry but I can't enchant that, bring me an echantable tool.");
 		}
 	}
 }

@@ -10,6 +10,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -36,24 +37,24 @@ public class Enchanter {
 	public static void enchant(Player p, int lvl){
 		if (levelCheck.get(p.getName()).getItemMeta().getDisplayName() == p.getItemInHand().getItemMeta().getDisplayName()){
 			if (lvl == 1){
-				if (CrystalAPI.getCrystals(p.getName()) >= 700){
-				CrystalAPI.removeCrystals(p.getName(), 700);
+				if (CrystalAPI.getCrystals(p) >= 700){
+				CrystalAPI.removeCrystals(p, 700);
 				}else{
 					p.sendMessage(ChatColor.RED + "You don't have enough crystals, need more? You can buy them at our website.");
 					return;
 				}
 			}
 			if (lvl == 2){
-				if (CrystalAPI.getCrystals(p.getName()) >= 1500){
-					CrystalAPI.removeCrystals(p.getName(), 1500);
+				if (CrystalAPI.getCrystals(p) >= 1500){
+					CrystalAPI.removeCrystals(p, 1500);
 					}else{
 						p.sendMessage(ChatColor.RED + "You don't have enough crystals, need more? You can buy them at our website.");
 						return;
 					}
 			}
 			if (lvl == 3){
-				if (CrystalAPI.getCrystals(p.getName()) >= 2500){
-					CrystalAPI.removeCrystals(p.getName(), 2500);
+				if (CrystalAPI.getCrystals(p) >= 2500){
+					CrystalAPI.removeCrystals(p, 2500);
 					}else{
 						p.sendMessage(ChatColor.RED + "You don't have enough crystals, need more? You can buy them at our website.");
 						return;
@@ -167,6 +168,7 @@ public class Enchanter {
 			lore.add(ChatColor.GRAY + " Speed: " + ChatColor.YELLOW + "+" + (int) t.getSpeed());
 			lore.add(ChatColor.GREEN + " Enchants Left: " + ChatColor.YELLOW + (t.getEnchants() - 1));
 			itemm.setLore(lore);
+			itemm.addItemFlags(ItemFlag.HIDE_ENCHANTS);
 			item.setItemMeta(itemm);
 			item.setDurability(p.getItemInHand().getDurability());
 			item.addUnsafeEnchantment(Enchantment.DIG_SPEED, efficiency);

@@ -55,17 +55,37 @@ public class Events implements Listener{
 							double percent = 0 + (100 - 0) * r.nextDouble();
 							double percent1 = 0 + (100 - 0) * r.nextDouble();
 							if (percent <= t.getAncientChance() && !event.isCancelled()){
-								ItemStack ancient = new ItemStack(Material.STONE_PICKAXE);
-								ItemMeta ancientm = ancient.getItemMeta();
-								ancientm.setDisplayName(ChatColor.YELLOW + "Ancient Pickaxe");
-								List<String> lore = new ArrayList<String>();
-								lore.add(ChatColor.GRAY + "Give this to the Identifier to see what");
-								lore.add(ChatColor.GRAY + "type of pickaxe lies within.");
-								ancientm.setLore(lore);
-								ancient.setItemMeta(ancientm);
-								p.getInventory().addItem(ancient);
-								p.sendMessage(ChatColor.GREEN + "Found: " + ChatColor.YELLOW + "Ancient Pickaxe");
-								p.updateInventory();
+								int util = r.nextInt(10) + 1;
+								switch(util){
+								case 1:
+								case 2:
+								case 3:
+								case 4:
+								case 5:
+									ToolAPI.giveAncientPicks(p, 1);
+									p.sendMessage(ChatColor.GREEN + "Found: " + ChatColor.YELLOW + "Ancient Pickaxe");
+									break;
+								case 6:
+									ToolAPI.giveAncientSwords(p, 1);
+									p.sendMessage(ChatColor.GREEN + "Found: " + ChatColor.YELLOW + "Ancient Sword");
+									break;
+								case 7:
+									ToolAPI.giveArmor(p, 1, "Boots");
+									p.sendMessage(ChatColor.GREEN + "Found: " + ChatColor.YELLOW + "Ancient Boots");
+									break;
+								case 8:
+									ToolAPI.giveArmor(p, 1, "Leggings");
+									p.sendMessage(ChatColor.GREEN + "Found: " + ChatColor.YELLOW + "Ancient Leggings");
+									break;
+								case 9:
+									ToolAPI.giveArmor(p, 1, "Chestplate");
+									p.sendMessage(ChatColor.GREEN + "Found: " + ChatColor.YELLOW + "Ancient Chestplate");
+									break;
+								case 10:
+									ToolAPI.giveArmor(p, 1, "Helmet");
+									p.sendMessage(ChatColor.GREEN + "Found: " + ChatColor.YELLOW + "Ancient Helmet");
+									break;
+								}
 							}
 							if (percent1 <= t.getExtraDrops() && !event.isCancelled()){
 								ExtraDrops.giveExtra(p, event.getBlock().getLocation());
@@ -96,7 +116,7 @@ public class Events implements Listener{
 			ItemStack item = p.getInventory().getItem(event.getNewSlot());
 			if (item.hasItemMeta()){
 				ItemMeta itemm = item.getItemMeta();
-				if (itemm.hasLore()){
+				if (itemm.hasLore() && itemm.hasLore() && itemm.getLore().size() > 2){
 					if (itemm.getLore().get(1).contains("Efficiency")){
 					newt = ToolStats.getToolStats(item);
 						newis = true;
@@ -108,7 +128,7 @@ public class Events implements Listener{
 			ItemStack item = p.getInventory().getItem(event.getPreviousSlot());
 			if (item.hasItemMeta()){
 				ItemMeta itemm = item.getItemMeta();
-				if (itemm.hasLore()){
+				if (itemm.hasLore() && itemm.getLore().size() > 2){
 					if (itemm.getLore().get(1).contains("Efficiency")){
 					old = ToolStats.getToolStats(item);
 					oldis = true;
@@ -125,6 +145,7 @@ public class Events implements Listener{
 			float add = newt.getSpeed() * 0.05f;
 			float currentspeed = p.getWalkSpeed();
 			float newspeed = currentspeed + add;
+			if (newspeed > 1.0f) newspeed = 1.0f;
 			p.setWalkSpeed(newspeed);
 			return;
 		}
@@ -132,6 +153,7 @@ public class Events implements Listener{
 			float add = newt.getSpeed() * 0.05f;
 			float currentspeed = p.getWalkSpeed();
 			float newspeed = currentspeed + add;
+			if (newspeed > 1.0f) newspeed = 1.0f;
 			p.setWalkSpeed(newspeed);
 			return;
 		}

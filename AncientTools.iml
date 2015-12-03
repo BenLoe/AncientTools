@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="JAVA_MODULE" version="4">
+  <component name="EclipseModuleManager">
+    <libelement value="jar://$USER_HOME$/Desktop/ALL DE STUFF/Spigot/spigot-1.8.jar!/" />
+    <libelement value="jar://$USER_HOME$/Desktop/ALL DE STUFF/Escapists/plugins/PrisonMain.jar!/" />
+    <libelement value="jar://$USER_HOME$/Desktop/ALL DE STUFF/Escapists/plugins/Citizens (2).jar!/" />
+    <libelement value="jar://$USER_HOME$/Desktop/ALL DE STUFF/Escapists/plugins/HolographicDisplays.jar!/" />
+    <libelement value="jar://$USER_HOME$/Desktop/ALL DE STUFF/Escapists/plugins/AchievementSystem.jar!/" />
+    <libelement value="jar://$USER_HOME$/Desktop/ALL DE STUFF/Escapists/plugins/Blackmarket.jar!/" />
+    <src_description expected_position="0">
+      <src_folder value="file://$MODULE_DIR$/src" expected_position="0" />
+    </src_description>
+  </component>
+  <component name="NewModuleRootManager" inherit-compiler-output="false">
+    <output url="file://$MODULE_DIR$/bin" />
+    <exclude-output />
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
+    </content>
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="jdk" jdkName="JavaSE-1.7" jdkType="JavaSDK" />
+    <orderEntry type="module-library">
+      <library name="spigot-1.8.jar">
+        <CLASSES>
+          <root url="jar://$USER_HOME$/Desktop/ALL DE STUFF/Spigot/spigot-1.8.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="PrisonMain.jar">
+        <CLASSES>
+          <root url="jar://$USER_HOME$/Desktop/ALL DE STUFF/Escapists/plugins/PrisonMain.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="Citizens (2).jar">
+        <CLASSES>
+          <root url="jar://$USER_HOME$/Desktop/ALL DE STUFF/Escapists/plugins/Citizens (2).jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="HolographicDisplays.jar">
+        <CLASSES>
+          <root url="jar://$USER_HOME$/Desktop/ALL DE STUFF/Escapists/plugins/HolographicDisplays.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="AchievementSystem.jar">
+        <CLASSES>
+          <root url="jar://$USER_HOME$/Desktop/ALL DE STUFF/Escapists/plugins/AchievementSystem.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="Blackmarket.jar">
+        <CLASSES>
+          <root url="jar://$USER_HOME$/Desktop/ALL DE STUFF/Escapists/plugins/Blackmarket.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+  </component>
+</module>

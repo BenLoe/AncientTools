@@ -40,7 +40,6 @@ public class ExtraDrops {
 		if (percent <= 40){
 			types.add("Mushroom");
 			types.add("Crystals");
-			types.add("Diamonds");
 		}
 		String type = types.get(r.nextInt(types.size()));
 		String name = "";
@@ -51,7 +50,7 @@ public class ExtraDrops {
 		ParticleEffect.BLOCK_CRACK.display(new ParticleEffect.BlockData(Material.GOLD_BLOCK, (byte)0), 0.3f, 0.3f, 0.3f, 0.05f, 100, brokenBlock.clone().add(0.5, 0, 0.5), 5);
 		switch(type){
 		case "Money":{
-			int amount = r.nextInt(180) + 51;
+			int amount = r.nextInt(200) + 200;
 			MoneyAPI.addMoney(p, amount);
 			name = ChatColor.GREEN + "" + amount + " Dollars";
 		}
@@ -64,7 +63,7 @@ public class ExtraDrops {
 		break;
 		case "Crystals":{
 			int amount = r.nextInt(100) + 20;
-			CrystalAPI.addCrystals(p.getName(), amount);
+			CrystalAPI.addCrystals(p, amount);
 			name = ChatColor.AQUA + "" + amount + " Crystals";
 		}
 		break;
@@ -79,12 +78,6 @@ public class ExtraDrops {
 			for (int i = 1; i <= amount; i++){
 				p.getInventory().addItem(new ItemStack(Material.MUSHROOM_SOUP));
 			}
-		}
-		break;
-		case "Diamonds":{
-			int amount = r.nextInt(10) + 2;
-			name = ChatColor.AQUA + "" + amount + " Diamonds";
-			p.getInventory().addItem(new ItemStack(Material.DIAMOND, amount));
 		}
 		}
 		final Hologram h = HolographicDisplaysAPI.createHologram(Main.getPlugin(Main.class), brokenBlock.clone().add(0.5, 1.7, 0.5), name);
