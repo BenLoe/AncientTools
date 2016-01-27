@@ -108,6 +108,7 @@ public class ToolAPI {
 		}
 		if (type == "Ultra"){
 			c = ChatColor.DARK_RED;
+			AchievementAPI.completeAchievement(p, AchievementMenu.GETTING_LUCKY);
 		}
 		ItemStack item = new ItemStack(Material.DIAMOND_PICKAXE);
 		ItemMeta itemm = item.getItemMeta();
@@ -123,7 +124,6 @@ public class ToolAPI {
 		lore.add(ChatColor.GRAY + " Speed: " + ChatColor.YELLOW + "+" + Speed);
 		lore.add(ChatColor.GREEN + " Enchants Left: " + ChatColor.YELLOW + Enchants);
 		itemm.setLore(lore);
-		itemm.addItemFlags(ItemFlag.HIDE_ENCHANTS);
 		item.setItemMeta(itemm);
 		item.addUnsafeEnchantment(Enchantment.DIG_SPEED, efficiency);
 		item.addUnsafeEnchantment(Enchantment.LOOT_BONUS_BLOCKS, fortune);
@@ -139,9 +139,6 @@ public class ToolAPI {
 					.then("§7.").send(p1);				
 					}
 			}
-		}
-		if (type == "Ultra"){
-			AchievementAPI.completeAchievement(p, AchievementMenu.GETTING_LUCKY);
 		}
 	}
 	
@@ -218,7 +215,6 @@ public class ToolAPI {
 		lore.add(ChatColor.GRAY + " Fire Aspect: " + ChatColor.GREEN + "" + Flame);
 		lore.add(ChatColor.GRAY + " Unbreaking: " + ChatColor.GREEN + unbreaking);
 		itemm.setLore(lore);
-		itemm.addItemFlags(ItemFlag.HIDE_ENCHANTS);
 		item.setItemMeta(itemm);
 		item.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, sharpness);
 		item.addUnsafeEnchantment(Enchantment.FIRE_ASPECT, Flame);
@@ -323,7 +319,6 @@ public class ToolAPI {
 		lore.add(ChatColor.GRAY + " Fire Protection: " + ChatColor.GREEN + "" + fireprotect);
 		lore.add(ChatColor.GRAY + " Unbreaking: " + ChatColor.GREEN + unbreaking);
 		itemm.setLore(lore);
-		itemm.addItemFlags(ItemFlag.HIDE_ENCHANTS);
 		item.setItemMeta(itemm);
 		item.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, protection);
 		item.addUnsafeEnchantment(Enchantment.PROTECTION_FIRE, fireprotect);
@@ -386,7 +381,6 @@ public class ToolAPI {
 		lore.add(ChatColor.GRAY + "type of armor lies within.");
 		ancientm.setLore(lore);
 		ancientm.setColor(Color.GRAY);
-		ancientm.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
 		ancient.setItemMeta(ancientm);
 		p.getInventory().addItem(ancient);
 		p.updateInventory();

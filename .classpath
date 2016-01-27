@@ -9,5 +9,6 @@
 	<classpathentry kind="lib" path="C:/Users/Ben/Desktop/ALL DE STUFF/Escapists/plugins/Blackmarket.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Ben/Desktop/ALL DE STUFF/Escapists/plugins/Quests.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Ben/Desktop/ALL DE STUFF/Spigot/spigot-1.8.8.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Ben/Desktop/ALL DE STUFF/PitMc/plugins/LuckyBattle.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
