@@ -4,10 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import me.BenLoe.quest.ActiveQuest;
-import me.BenLoe.quest.NeededType;
-import me.BenLoe.quest.QuestAPI;
-
 import org.Prison.Main.PlayerMode;
 import org.Prison.Main.Letter.LetterType;
 import org.Prison.Main.Ranks.RankType;
@@ -21,10 +17,17 @@ import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
+
+import com.gmail.filoghost.holographicdisplays.api.Hologram;
+import com.gmail.filoghost.holographicdisplays.api.line.TextLine;
+
+import me.BenLoe.quest.ActiveQuest;
+import me.BenLoe.quest.NeededType;
+import me.BenLoe.quest.QuestAPI;
+
 
 public class ToolAPI {
 	
@@ -55,7 +58,13 @@ public class ToolAPI {
 		}
 		if (rank == RankType.NONE || rank == RankType.VIP || rank == RankType.ELITE){
 		Cooldown.setCooldown(p.getName(), seconds, "Identify");
+		Main.cooldown.put(p.getName(), true);
+		Hologram h = Main.identify.get(p.getName());
+		TextLine tl = (TextLine) h.getLine(1);
+		tl.setText(Cooldown.getTimeLeftAlt(p.getName(), "Identify"));
+		Main.identify.put(p.getName(), h);
 		}
+		
 		int IntellectLevel = SmartTrait.getLevel(p);
 		double RarePercent = 20 + (0.19 * IntellectLevel);
 		double EpicPercent = 1.1 + (0.19 * IntellectLevel);

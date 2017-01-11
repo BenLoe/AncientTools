@@ -74,8 +74,50 @@ public class Cooldown {
 				long diffMinutes = diff / (60 * 1000) % 60;
 				long diffHours = diff / (60 * 60 * 1000) % 24;
 				long diffDays = diff / (24 * 60 * 60 * 1000);
+				if (diffMinutes > 0){
+					return "§9" + diffMinutes + "§9§l Mins " + "§9 " + diffSeconds + "§9§l Secs";
+				}else{
+					return "§9" + diffSeconds + "§9§l Secs";
+				}
+	 
+			} catch (Exception e) {
+				e.printStackTrace();
+				return "BROKEN";
+			}
+		}
+		
+		public static String getTimeLeftAlt(String p, String type){
+			Calendar c = Calendar.getInstance();
+			int day = Files.getDataFile().getInt("Players." + p + ".Cooldowns." + type + ".Day");
+			int hours = Files.getDataFile().getInt("Players." + p + ".Cooldowns." + type + ".Hour");
+			int minutes = Files.getDataFile().getInt("Players." + p + ".Cooldowns." + type + ".Minute");
+			int seconds = Files.getDataFile().getInt("Players." + p + ".Cooldowns." + type + ".Second");
+			String dateStart = c.get(Calendar.DAY_OF_YEAR) + "/" + c.get(Calendar.YEAR) + " " + c.get(Calendar.HOUR_OF_DAY) + ":" + c.get(Calendar.MINUTE) + ":" + c.get(Calendar.SECOND);
+			String dateStop = day + "/" + c.get(Calendar.YEAR) + " " + hours + ":" + minutes + ":" + seconds;
+	 
+			//HH converts hour in 24 hours format (0-23), day calculation
+			SimpleDateFormat format = new SimpleDateFormat("dd/yyyy HH:mm:ss");
+	 
+			Date d1 = null;
+			Date d2 = null;
+	 
+			try {
+				d1 = format.parse(dateStart);
+				d2 = format.parse(dateStop);
+	 
+				//in milliseconds
+				long diff = d2.getTime() - d1.getTime();
 				
-				return "§9" + diffMinutes + "§9§l Mins " + "§9 " + diffSeconds + "§9§l Secs";
+				
+				long diffSeconds = diff / 1000 % 60;
+				long diffMinutes = diff / (60 * 1000) % 60;
+				long diffHours = diff / (60 * 60 * 1000) % 24;
+				long diffDays = diff / (24 * 60 * 60 * 1000);
+				if (diffMinutes > 0){
+					return "§7" + diffMinutes + "§7§l Mins " + "§7 " + diffSeconds + "§7§l Secs";
+				}else{
+					return "§7" + diffSeconds + "§7§l Secs";
+				}
 	 
 			} catch (Exception e) {
 				e.printStackTrace();

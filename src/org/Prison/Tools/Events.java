@@ -23,10 +23,16 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemHeldEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.util.Vector;
+
+import com.gmail.filoghost.holographicdisplays.api.Hologram;
+import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
+
 
 
 public class Events implements Listener{
@@ -168,5 +174,22 @@ public class Events implements Listener{
 			return;
 		}
 		}
+	}
+	
+	@SuppressWarnings("deprecation")
+	@EventHandler
+	public void join(PlayerJoinEvent event){
+		Hologram h = HologramsAPI.createHologram(Main.getPlugin(Main.class),  new Location(Bukkit.getWorld("PrisonMap"), -221.3, 71.57, 220.2));
+		h.insertTextLine(0, "§b§lIdentifier");
+		h.insertTextLine(1, "§e§lRight Click");
+		h.getVisibilityManager().setVisibleByDefault(false);
+		h.getVisibilityManager().showTo(event.getPlayer());
+		Main.identify.put(event.getPlayer().getName(), h);
+	}
+	
+	@EventHandler
+	public void leaveEvent(PlayerQuitEvent event){
+		Hologram h = Main.identify.get(event.getPlayer().getName());
+		h.delete();
 	}
 }

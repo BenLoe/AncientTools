@@ -1,5 +1,7 @@
 package org.Prison.Tools;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import net.md_5.bungee.api.ChatColor;
 import net.minecraft.server.v1_8_R3.IChatBaseComponent;
@@ -7,21 +9,61 @@ import net.minecraft.server.v1_8_R3.IChatBaseComponent.ChatSerializer;
 import net.minecraft.server.v1_8_R3.PacketPlayOutChat;
 
 import org.Prison.Main.Currency.CrystalAPI;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import com.gmail.filoghost.holographicdisplays.api.Hologram;
+import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
+import com.gmail.filoghost.holographicdisplays.api.line.TextLine;
+
 public class Main extends JavaPlugin{
 	
 	Events events = new Events(this);
 	Files files = new Files(this);
 	public static HashMap<String,Integer> areYouSure = new HashMap<String,Integer>();
+	@SuppressWarnings("deprecation")
+	public static HashMap<String,Hologram> identify = new HashMap<String,Hologram>();
+	public static HashMap<String,Boolean> cooldown = new HashMap<String,Boolean>();
+	public static List<Hologram> delete = new ArrayList<Hologram>();
+	
 
 	public void onEnable(){
 		getServer().getPluginManager().registerEvents(events, this);
 		saveDefaultConfig();
+		Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new Runnable(){
+			public void run(){
+				for (Player p : Bukkit.getOnlinePlayers()){
+					if (cooldown.containsKey(p.getName())){
+					if (cooldown.get(p.getName())){
+						Cooldown.checkCooldown(p.getName(), "Identify");
+						if (Cooldown.hasCooldown(p.getName(), "Identify")){
+							Hologram h = identify.get(p.getName());
+							TextLine tl = (TextLine) h.getLine(1);
+							tl.setText(Cooldown.getTimeLeftAlt(p.getName(), "Identify"));
+							identify.put(p.getName(), h);
+						}else{
+							cooldown.put(p.getName(), false);
+							Hologram h = Main.identify.get(p.getName());
+							TextLine tl = (TextLine) h.getLine(1);
+							tl.setText("§e§lRight Click");
+							identify.put(p.getName(), h);
+						}
+					}
+				}
+				}
+			}
+		}, 20l, 20l);
+	}
+	
+	public void onDisable(){
+		for (Player p : Bukkit.getOnlinePlayers()){
+			identify.get(p.getName()).delete();
+		}
 	}
 	
 	public boolean onCommand(CommandSender sender, Command cmd,
